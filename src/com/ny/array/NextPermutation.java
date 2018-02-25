@@ -3,6 +3,9 @@ package com.ny.array;
 import java.util.Arrays;
 
 public class NextPermutation {
+    /**
+     * 后半段因为是递增的所以使用反转即可
+     */
     public void nextPermutation(int[] nums) {
         if (nums.length < 2) return;
         int i = nums.length - 2;
