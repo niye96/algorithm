@@ -1,4 +1,6 @@
-package com.ny.backtracking;
+package com.ny.dp;
+
+import java.util.Arrays;
 
 /**
  * @Author: ny
@@ -15,18 +17,27 @@ public class UniquePaths {
 //            }
 //        }
 //        return matrix[m - 1][n -1];
-        long total = m + n - 1 - 1;
-        long min = Math.min(m - 1, n - 1);
-        long res = 1;
-        for (int i = 1; i <= min; i++) {
-            res *= (total + 1 - i);
-            res /= i;
+//        long total = m + n - 1 - 1;
+//        long min = Math.min(m - 1, n - 1);
+//        long res = 1;
+//        for (int i = 1; i <= min; i++) {
+//            res *= (total + 1 - i);
+//            res /= i;
+//        }
+//        return (int) res;
+
+        int[] row = new int[n];
+        Arrays.fill(row, 1);
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                row[j] += row[j - 1];
+            }
         }
-        return (int) res;
+        return row[n - 1];
     }
 
     public static void main(String[] args) {
-        uniquePaths(51, 9);
+        uniquePaths(4, 3);
         uniquePaths(1, 2);
         uniquePaths(1, 1);
     }
