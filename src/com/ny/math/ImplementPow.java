@@ -41,7 +41,7 @@ public class ImplementPow {
                 }
             }
             x *= x;
-            n /= 2;
+            n = n >> 1;
         }
 
         return result;
