@@ -1,45 +1,39 @@
 package com.ny.array;
 
 public class SearchinRotatedSortedArray {
-    public static int search(int[] nums, int target) {
-        return search(nums, 0, nums.length - 1, target);
-    }
-
-    private static int search(int[] nums, int lo, int hi, int target) {
-        if (lo > hi) return -1;
-        int mid = (lo + hi) >> 1;
-        int pos = -1;
-        if (target < nums[mid]) {
-            if (nums[lo] <= nums[mid]) {
-                if (target > nums[lo])
-                    pos = search(nums, lo + 1, mid - 1, target);
-                else if (target < nums[lo])
-                    pos = search(nums, mid + 1, hi, target);
-                else return lo;
+    public static boolean search(int[] nums, int target) {
+        int lo = 0, hi = nums.length - 1, mid;
+        while (lo <= hi) {
+            mid = (lo + hi) >> 1;
+            if (nums[mid] == target) return true;
+            //如果左边是排序的
+            if (nums[mid] > nums[lo]) {
+                if (target < nums[mid] && target >= nums[lo]) {
+                    hi = mid - 1;
+                } else {
+                    lo = mid + 1;
+                }
+            } else if (nums[mid] < nums[lo]) { //右边是排序的
+                if (target > nums[mid] && target <= nums[hi]) {
+                    lo = mid + 1;
+                } else {
+                    hi = mid - 1;
+                }
             } else {
-                pos = search(nums, lo, mid - 1, target);
+                lo++;
             }
-        } else if (target > nums[mid]) {
-            if (nums[hi] >= nums[mid]) {
-                if (target < nums[hi])
-                    pos = search(nums, mid + 1, hi - 1, target);
-                else if (target > nums[hi])
-                    pos = search(nums, lo, mid - 1, target);
-                else return hi;
-            } else {
-                pos = search(nums, mid + 1, hi, target);
-            }
-        } else {
-            return mid;
         }
-        return pos;
+        return false;
     }
 
     public static void main(String[] args) {
-        System.out.println(search(new int[]{2}, 2));
-        System.out.println(search(new int[]{2}, 1));
-        System.out.println(search(new int[]{4, 5, 6, 7, 8, 9, 10, 1, 2, 3}, 4));
-        System.out.println(search(new int[]{4, 5, 6, 7, 8, 9, 10, 1, 2, 3}, 5));
+        System.out.println(search(new int[]{1, 1, 1, 3, 1}, 3));
+        System.out.println(search(new int[]{1, 3, 1, 1, 1}, 3));
+        System.out.println(search(new int[]{1, 3, 0, 1, 1}, 3));
+        System.out.println(search(new int[]{2, 1}, 3));
+        System.out.println(search(new int[]{1, 1, 1, 2, 2, 3, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1}, 3));
+        System.out.println(search(new int[]{4, 5, 5, 6, 8, 8, 9, 10, 1, 2, 3}, 7));
+        System.out.println(search(new int[]{2, 5, 5, 6, 7, 8, 9, 10, 1, 2, 2}, 5));
         System.out.println(search(new int[]{4, 5, 6, 7, 8, 9, 10, 1, 2, 3}, 6));
         System.out.println(search(new int[]{4, 5, 6, 7, 8, 9, 10, 1, 2, 3}, 7));
         System.out.println(search(new int[]{4, 5, 6, 7, 8, 9, 10, 1, 2, 3}, 8));
